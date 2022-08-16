@@ -88,7 +88,7 @@ def filter_stops_by_route(route): #input a route. Creates a shapefile containing
     stops.to_file("data/filtered stops/route {} stops.shp".format(route))
     return
 
-def map(routes): #Input a LIST of routes. Creates ONE html file showing the transit zoning map, for the list of routes.
+def map(routes,filename=None): #Input a LIST of routes. Creates ONE html file showing the transit zoning map, for the list of routes.
     stops = geopandas.read_file("data/filtered stops/route {} stops.shp".format(routes[0]))
 
     if len(routes) > 0:
@@ -153,20 +153,29 @@ def map(routes): #Input a LIST of routes. Creates ONE html file showing the tran
                     x=0.01
                     ))
     #fig.show()
-    title = ""
-    for route in routes:
-        title = title + route + " "
+    if filename == None:
+        filename = ""
+        for route in routes:
+            filename = filename + route + " "
 
-    fig.write_html('charts/{}.html'.format(title.strip()))
+    fig.write_html('charts/{}.html'.format(filename.strip()))
     return
 
 def create_all_maps(): #Combine everything together
-    routes = list_routes()
-    print(routes)
-    for route in routes:
-        print("Processing route " + route)
-        filter_stops_by_route(route)
-        map([route])
+    """    routes = list_routes()
+        print(routes)
+        for route in routes:
+            print("Processing route " + route)
+            filter_stops_by_route(route)
+            map([route])
+    """
+    #RapidBus Map
+
+    map(['26','50','70'],"Future RapidBus Network")
+
+    map(['3','7','1'],"Fairfield Routes")
+
+    map(['1','2','5','11'],"Oak Bay Routes")
 
 create_all_maps()
 #map(['3'])

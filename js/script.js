@@ -20,10 +20,15 @@ function update() {
   console.log("updated");
 }
 
-function updateMap() {
-var e = document.getElementById("route-selection");
+function updateMap(id,special) {
+var e = document.getElementById(id);
 var value = e.value;
 console.log(value);
-$("#main-title").text("Zoning within 400m of route " + value + " stops");
+if (special) {
+  $("#main-title").text("Zoning within 400m of " + value + " stops");
+}
+else {
+  $("#main-title").text("Zoning within 400m of route " + value + " stops");
+}
 $("#map").attr("src","charts/"+value+".html");
 }

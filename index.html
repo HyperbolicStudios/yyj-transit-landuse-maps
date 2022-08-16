@@ -42,10 +42,20 @@
   </section>
 
   <section class="container">
-    <form id="route-form">
+    <form class="route-form">
       <label>Select a route: </label>
       <input type="number" value="3" id="route-selection" title="route number selection">
-      <input type="button" onclick="updateMap()" value="Load map">
+      <input type="button" onclick="updateMap('route-selection',false)" value="Load map">
+    </form>
+
+    <form class="route-form">
+      <label>Or, select a special map:</label>
+      <select id="special-selection" title="Special map selection">
+        <option value='Future RapidBus Network'>Future RapidBus Network</option>
+        <option value='Fairfield Routes'>Fairfield Routes</option>
+        <option value='Oak Bay Routes'>Oak Bay Routes</option>
+      </section>
+      <input type="button" onclick="updateMap('special-selection',true)" value="Load special map">
     </form>
   </section>
   <div class="divider"></div>

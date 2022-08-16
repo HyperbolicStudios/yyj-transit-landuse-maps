@@ -112,6 +112,10 @@ p > a {
   margin-left: 10%;
 }
 
+iframe {
+  margin: 0% 10% 0% 10%;
+}
+
 #footer {
   display: grid;
   grid-template-columns: 1fr;

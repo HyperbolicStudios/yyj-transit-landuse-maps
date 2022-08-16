@@ -24,5 +24,6 @@ function updateMap() {
 var e = document.getElementById("route-selection");
 var value = e.value;
 console.log(value);
+$("#main-title").text("Zoning within 400m of route " + value + " stops");
 $("#map").attr("src","charts/"+value+".html");
 }

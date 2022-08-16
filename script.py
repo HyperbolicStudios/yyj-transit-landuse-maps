@@ -127,6 +127,7 @@ def map(routes): #Input a LIST of routes. Creates ONE html file showing the tran
                            mapbox_style="carto-positron",
                            zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
                            opacity=.5,
+                           name = "Simplified Zoning"
                             color_discrete_map=legend,
                                 category_orders={"SIMPLIFIED":legend.keys()}
                           )

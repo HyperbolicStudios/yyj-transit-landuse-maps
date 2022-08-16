@@ -122,27 +122,36 @@ def map(routes): #Input a LIST of routes. Creates ONE html file showing the tran
         }
 
     fig = px.choropleth_mapbox(data, geojson=data.geometry, locations=data.index, color='SIMPLIFIED',
-                           color_continuous_scale="Viridis",
-                           range_color=(0, 12),
-                           mapbox_style="carto-positron",
-                           zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
-                           opacity=.5,
-                           name = "Simplified Zoning"
-                            color_discrete_map=legend,
-                                category_orders={"SIMPLIFIED":legend.keys()}
-                          )
+                               color_continuous_scale="Viridis",
+                               range_color=(0, 12),
+                               mapbox_style="carto-positron",
+                               zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
+                               opacity=.5,
+                               labels = {'SIMPLIFIED':"Simplified Zoning Categories"},
+                               color_discrete_map=legend,
+                               category_orders={"SIMPLIFIED":legend.keys()}
+                               )
+
     stops = stops.to_crs('EPSG:4326')
+    stops.insert(1,"description",value="Bus Stop")
 
     fig1 = px.scatter_mapbox(stops,
-                    lat=stops.geometry.y,
-                    lon=stops.geometry.x,
-                    hover_name="stopname",
-                    mapbox_style="carto-positron",
-                    zoom=12, center = {"lat": 48.4284, "lon": -123.3656}
-                    )
+                            lat=stops.geometry.y,
+                            lon=stops.geometry.x,
+                            hover_name="stopname",
+                            mapbox_style="carto-positron",
+                            color="description",
+                            hover_data = {"description":False},
+                            zoom=12, center = {"lat": 48.4284, "lon": -123.3656}
+                            )
 
     fig.add_trace(fig1.data[0])
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0},legend=dict(
+                    yanchor="top",
+                    y=0.99,
+                    xanchor="left",
+                    x=0.01
+                    ))
     #fig.show()
     title = ""
     for route in routes:
@@ -160,3 +169,4 @@ def create_all_maps(): #Combine everything together
         map([route])
 
 create_all_maps()
+#map(['3'])

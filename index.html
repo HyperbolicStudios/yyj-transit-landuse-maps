@@ -1,5 +1,5 @@
-<!doctype html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Transit Land Use Alignment Project</title>
   <meta charset="UTF-8" />
@@ -43,13 +43,13 @@
   <section class="container">
     <form id="route-form">
     <label>Select a route: </label>
-    <input type="number" value="26" id = "route-selection" title="route selection">
+    <input type="number" value="3" id = "route-selection" title="route number selection">
   <input type="button" onclick="updateMap()" value="Load map">
 </form>
   </section>
   <div class="divider"></div>
   <html>
-  <iframe id="map",scrolling="no" style="border:none;" seamless="seamless" src="charts/15.html" height="700" width="100%"></iframe>
+  <iframe title= "Map of zoning within 400m of a transit stop of specified route" id="map",scrolling="no" seamless="seamless" src="charts/3.html" height="700" width="100%"></iframe>
   </html>
 
 
@@ -66,10 +66,11 @@ Zoning data from Home for Living's <a href="https://github.com/homesforliving/ma
   <footer id="footer">
 
 <p>&copy; 2022 Mark Edwardson</p>
-  <a href="https://github.com/HyperbolicStudios/yyj-transit-landuse-maps"><i class="fa-brands fa-github fa-2xl"></i></a>
+  <a title="Project Github" href="https://github.com/HyperbolicStudios/yyj-transit-landuse-maps"><i class="fa-brands fa-github fa-2xl"></i></a>
 
   </footer>
 
 </body>
 
 <script src="js/script.js"></script>
+</html>

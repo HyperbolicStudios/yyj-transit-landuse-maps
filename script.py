@@ -49,6 +49,21 @@ def update_static(url='http://victoria.mapstrat.com/current/google_transit.zip',
         time.sleep(.5)
     return
 
+def list_routes():
+    stop_times = pd.read_csv('data/google_transit/stop_times.csv')
+    stops = pd.read_csv('data/google_transit/stops.csv')
+    print("Creating list of routes...")
+    routes = []
+    for ind in stop_times.index:
+        headsign = stop_times['stop_headsign'][ind]
+        route_number = headsign[:headsign.find(" ")]
+        if route_number[-1].isalpha() == True:
+            route_number = route_number[:-1]
+        if route_number not in routes and headsign != "Drop Off Only":
+            routes.append(route_number)
+
+    return(routes)
+
 def filter_stops_by_route(route):
     stop_times = pd.read_csv('data/google_transit/stop_times.csv')
     stops = pd.read_csv('data/google_transit/stops.csv')
@@ -56,7 +71,10 @@ def filter_stops_by_route(route):
     stop_IDs = []
     for ind in stop_times.index:
         headsign = stop_times['stop_headsign'][ind]
-        if headsign[:headsign.find(" ")] == route:
+        route_number = headsign[:headsign.find(" ")]
+        if route_number[-1].isalpha() == True:
+            route_number = route_number[:-1]
+        if route_number == route:
             if stop_times['stop_id'][ind] not in stop_IDs:
                 stop_IDs.append(stop_times['stop_id'][ind])
     stop_codes = []
@@ -132,4 +150,12 @@ def map(routes):
     fig.write_html('charts/{}.html'.format(title.strip()))
     return
 
-map(['50','26','70'])
+def create_all_maps():
+    routes = list_routes()
+    print(routes)
+    for route in routes:
+        print("Processing route " + route)
+        filter_stops_by_route(route)
+        map([route])
+
+create_all_maps()

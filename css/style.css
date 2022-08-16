@@ -130,3 +130,18 @@ p > a {
 #footer>a>* {
   color: white;
 }
+
+#route-form > * {
+  font-size: 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#route-form > input, select {
+  background-color: #ebebeb;
+}
+
+#route-selection {
+  width:70px;
+  text-align: center;
+}

@@ -29,7 +29,10 @@
       <h5 class="menu-text">Home</h5>
     </a>
     <a href="https://github.com/hyperbolicstudios">
-      <h5 class="menu-text">About</h5>
+      <h5 class="menu-text">Github</h5>
+    </a>
+    <a href="https://markedwardson.me">
+      <h5 class="menu-text">Mark's Portfolio</h5>
     </a>
     <div></div>
 
@@ -37,12 +40,20 @@
   <section class="divider">
   </section>
 
+  <section class="container">
+    <form id="route-form">
+    <label>Select a route: </label>
+    <input type="number" value="26" id = "route-selection" title="route selection">
+  <input type="button" onclick="updateMap()" value="Load map">
+</form>
+  </section>
+  <div class="divider"></div>
   <html>
-  <iframe id="igraph",scrolling="no" style="border:none;" seamless="seamless" src="charts/50 26 70.html" height="700" width="100%"></iframe>
+  <iframe id="map",scrolling="no" style="border:none;" seamless="seamless" src="charts/15.html" height="700" width="100%"></iframe>
   </html>
 
 
-<br><br><br>
+<div class="divider"></div>
 
 <section class="container">
 
@@ -51,7 +62,7 @@ Zoning data from Home for Living's <a href="https://github.com/homesforliving/ma
 </p>
 
 </section>
-<br><br><br>
+<div class="divider"></div>
   <footer id="footer">
 
 <p>&copy; 2022 Mark Edwardson</p>

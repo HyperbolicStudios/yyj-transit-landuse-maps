@@ -49,7 +49,7 @@ def update_static(url='http://victoria.mapstrat.com/current/google_transit.zip',
         time.sleep(.5)
     return
 
-def list_routes():
+def list_routes(): #examines stop data, and returns a list of routes (ex. ['1', '2', '3'...]) in the system
     stop_times = pd.read_csv('data/google_transit/stop_times.csv')
     stops = pd.read_csv('data/google_transit/stops.csv')
     print("Creating list of routes...")
@@ -64,7 +64,7 @@ def list_routes():
 
     return(routes)
 
-def filter_stops_by_route(route):
+def filter_stops_by_route(route): #input a route. Creates a shapefile containing points  representing each stop served by the route. **Includes stops served by route variants, e.x. 7N
     stop_times = pd.read_csv('data/google_transit/stop_times.csv')
     stops = pd.read_csv('data/google_transit/stops.csv')
     print("Creating list of stops...")
@@ -88,7 +88,7 @@ def filter_stops_by_route(route):
     stops.to_file("data/filtered stops/route {} stops.shp".format(route))
     return
 
-def map(routes):
+def map(routes): #Input a LIST of routes. Creates ONE html file showing the transit zoning map, for the list of routes.
     stops = geopandas.read_file("data/filtered stops/route {} stops.shp".format(routes[0]))
 
     if len(routes) > 0:
@@ -150,7 +150,7 @@ def map(routes):
     fig.write_html('charts/{}.html'.format(title.strip()))
     return
 
-def create_all_maps():
+def create_all_maps(): #Combine everything together
     routes = list_routes()
     print(routes)
     for route in routes:

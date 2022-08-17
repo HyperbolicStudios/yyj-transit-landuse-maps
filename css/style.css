@@ -49,7 +49,7 @@ a {
   grid-template-rows: 100%;
 }
 
-#topHeader>h3 {
+#topHeader>* {
   font-family: 'Lato', sans-serif;
   color: white;
   height: 5vh;

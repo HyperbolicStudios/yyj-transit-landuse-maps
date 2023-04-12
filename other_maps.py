@@ -24,11 +24,11 @@ else:
 os.chdir(newDirectory)
 
 username = 'markedwardson' # your plotly username
-api_key = 'tB5eeeHP2j6XvaFUQdE8' # your plotly api key - go to profile > settings > regenerate key
+api_key = os.environ["PLOTLY_API_KEY"] # your plotly api key - go to profile > settings > regenerate key
 chart_studio.tools.set_credentials_file(username=username, api_key=api_key)
 
 def collect_data(criteria):
-    gmaps = googlemaps.Client("AIzaSyBXag6oZrEW9U6H1KjS420iJKLh9pD80ZY")
+    gmaps = googlemaps.Client(os.environ["GOOGLE_MAPS_API"])
 
     #make a request for all grocery stores within the city of victoria
     location = (48.425798, -123.343924)

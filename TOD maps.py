@@ -50,22 +50,7 @@ def update_static(url='http://victoria.mapstrat.com/current/google_transit.zip',
         time.sleep(.5)
     return
 
-def list_routes(): #examines stop data, and returns a list of routes (ex. ['1', '2', '3'...]) in the system
-    stop_times = pd.read_csv('data/google_transit/stop_times.csv')
-    stops = pd.read_csv('data/google_transit/stops.csv')
-    print("Creating list of routes...")
-    routes = []
-    for ind in stop_times.index:
-        headsign = stop_times['stop_headsign'][ind]
-        route_number = headsign[:headsign.find(" ")]
-        if route_number[-1].isalpha() == True:
-            route_number = route_number[:-1]
-        if route_number not in routes and headsign != "Drop Off Only":
-            routes.append(route_number)
-
-    return(routes)
-
-def filter_stops_by_route(route): #input a route. Creates a shapefile containing points  representing each stop served by the route. **Includes stops served by route variants, e.x. 7N
+def filter_stops_by_route(route): #input a route. Creates a shapefile containing points representing each stop served by the route. **Includes stops served by route variants, e.x. 7N
     stop_times = pd.read_csv('data/google_transit/stop_times.csv')
     stops = pd.read_csv('data/google_transit/stops.csv')
     print("Creating list of stops...")
@@ -122,17 +107,6 @@ def map(routes, map_type="default", filename=None): #Input a LIST of routes. Cre
             "Unclassified":"white"
             }
         
-        fig = px.choropleth_mapbox(data, geojson=data.geometry, locations=data.index, color='SIMPLIFIED',
-                               color_continuous_scale="Viridis",
-                               range_color=(0, 12),
-                               mapbox_style="carto-positron",
-                               zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
-                               opacity=.5,
-                               labels = {'SIMPLIFIED':"Simplified Zoning Categories"},
-                               color_discrete_map=legend,
-                               category_orders={"SIMPLIFIED":legend.keys()}
-                               )
-        
     elif map_type == "legal_apartments":
         #merge "Apartment" "Mixed use" and "Comprehensive Development" into "Legal Apartments"
         #merge "Commercial" "Missing Middle" "Single/Duplex" and "Industrial" into "Illegal Apartments"
@@ -144,17 +118,6 @@ def map(routes, map_type="default", filename=None): #Input a LIST of routes. Cre
             "Apartments Illegal":"lightgrey",
             "Other/Unclassified":"white"
             }
-                
-        fig = px.choropleth_mapbox(data, geojson=data.geometry, locations=data.index, color='SIMPLIFIED',
-                                 color_continuous_scale="Viridis",
-                                 range_color=(0, 12),
-                                 mapbox_style="carto-positron",
-                                 zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
-                                 opacity=.5,
-                                 labels = {'SIMPLIFIED':"Simplified Zoning Categories"},
-                                 color_discrete_map=legend,
-                                 category_orders={"SIMPLIFIED":legend.keys()}
-                                 )
     
     elif map_type == "within_400m":
         data['Simplified'] = 'Within 400m of a frequent bus stop'
@@ -162,20 +125,21 @@ def map(routes, map_type="default", filename=None): #Input a LIST of routes. Cre
             "Within 400m of a frequent bus stop":"red",
             "Outside 400m of a frequent bus stop":"lightgrey"
             }
-        fig = px.choropleth_mapbox(data, geojson=data.geometry, locations=data.index, color='Simplified',
-                                    color_continuous_scale="Viridis",
-                                    range_color=(0, 12),
-                                    mapbox_style="carto-positron",
-                                    zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
-                                    opacity=.5,
-                                    labels = {'Simplified':"Simplified Zoning Categories"},
-                                    color_discrete_map=legend,
-                                    category_orders={"Simplified":legend.keys()}
-                                    )
-                                       
+                                         
     else:
         print("Invalid map type. Please choose 'default', 'within_400m' or 'legal_apartments'")
         return   
+
+    fig = px.choropleth_mapbox(data, geojson=data.geometry, locations=data.index, color='SIMPLIFIED',
+                               color_continuous_scale="Viridis",
+                               range_color=(0, 12),
+                               mapbox_style="carto-positron",
+                               zoom=12, center = {"lat": 48.4284, "lon": -123.3656},
+                               opacity=.5,
+                               labels = {'SIMPLIFIED':"Simplified Zoning Categories"},
+                               color_discrete_map=legend,
+                               category_orders={"SIMPLIFIED":legend.keys()}
+                               )
 
     stops = stops.to_crs('EPSG:4326')
     stops.insert(1,"description",value="Bus Stop")
@@ -197,30 +161,8 @@ def map(routes, map_type="default", filename=None): #Input a LIST of routes. Cre
                     xanchor="left",
                     x=0.01
                     ))
-    #fig.show()
-    if filename == None:
-        filename = ""
-        for route in routes:
-            filename = filename + route + " "
-
-    fig.write_html('charts/{}.html'.format(filename.strip()))
+    
+    fig.write_html('maps/TOD.html')
     return
-
-def create_all_maps(): #Combine everything together
-    """    routes = list_routes()
-        print(routes)
-        for route in routes:
-            print("Processing route " + route)
-            filter_stops_by_route(route)
-            map([route])
-    """
-    #RapidBus Map
-
-    map(['26','50','70'],"Future RapidBus Network")
-
-    map(['3','7','1'],"Fairfield Routes")
-
-    map(['1','2','5','11'],"Oak Bay Routes")
-
 
 map(['4', '11', '14','15','50', '2', '5', '7'],map_type="within_400m",filename="TOD")

@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/4a730956-b35d-40a6-be2d-d2880ed39433)
+
 # yyj-transit-landuse-maps
 Maps comparing CRD transit corridors with local land use, using BC Transit's open data and Home for Living's harmonized zoning maps. Long term goal is to build tools to support more equitable zoning codes and OCPs.
 
